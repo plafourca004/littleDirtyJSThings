@@ -1,0 +1,119 @@
+<html>
+	<head>
+	</head>
+	<body>
+		<h1>Daktilo 20000</h1>
+	
+		<form>
+			<input id="text" type="text" onkeydown="keyPressed(this)" onkeyup="keyReleased(this)" />
+		</form>
+		<p>Ecrire "<span id="mot"></span>"</p>
+		<p>Temps: <span id="time"></span> (Best: <span id="best">99999999999999999</span>)</p>
+	
+		<form>
+			<input type="text" onkeyup="setWord(this.value)" value="test" />
+		</form>
+
+		<button onclick="save()">Save</button>
+	</body>
+	
+	<script>
+	
+		var isStarted = false;
+		var startTime;
+		var word = "test";
+		document.getElementById("mot").innerHTML = word;
+		var interval;
+		var wordSaved = new Map()
+		
+		function keyPressed(input)
+		{
+			if(!isStarted)
+			{
+				isStarted = true;
+				startTime = Date.now();
+				interval = setInterval(function() {
+					var elapsedTime = Date.now() - startTime;
+					document.getElementById("time").innerHTML = elapsedTime;
+				}, 100);
+			}
+			
+		}
+		
+		function keyReleased(input)
+		{
+			if(isStarted)
+			{
+				if(input.value == word)
+				{
+					isStarted = false;
+					clearInterval(interval);
+					input.value = "";
+					var temps = (Date.now() - startTime);
+					document.getElementById("time").innerHTML = temps;
+					if(document.getElementById("best").innerHTML > temps)
+					{
+						document.getElementById("best").innerHTML = temps;
+						document.getElementById("best").style.color = "red";
+					}
+					else
+					{
+						document.getElementById("best").style.color = "black";
+					}
+				}
+				else if(input.value == "")
+				{
+					isStarted = false;
+					clearInterval(interval);
+					input.value = "";
+					document.getElementById("time").innerHTML = "";
+				}
+				else
+				{
+					if(word.startsWith(input.value))
+					{
+						input.style.color = "green";
+					}
+					else
+					{
+						input.style.color = "red";
+					}
+				}
+			}
+		}
+		
+		function setWord(mot)
+		{
+			word = mot;
+			document.getElementById("mot").innerHTML = word;
+			document.getElementById("text").value = "";
+			document.getElementById("best").innerHTML = "99999999999999999";
+		}
+
+		function save()
+		{
+			mot = document.getElementById("mot").innerHTML
+			best = document.getElementById("best").innerHTML
+			
+			if(wordSaved.has(mot))
+			{
+				if(wordSaved.get(mot) > best)
+				{
+					wordSaved.set(mot, best)
+				}
+			}
+			else
+			{
+					wordSaved.set(mot, best)
+			}
+
+			console.log(wordSaved)
+
+			//TODO:
+			//	- Save map to a file
+			//  - Print map on site (ordered by values ?)
+			//	- If new best saved, add red on the map printed
+		}
+	
+	</script>
+</html>

@@ -1,0 +1,66 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Trainer</title>
+    </head>
+    <body>
+        <p>Dimanche = 0, Lundi = 1, Mardi = 2, Mercredi = 3, Jeudi = 4, Vendredi = 5, Samedi = 6</p>
+        <input type="button" onclick="getNew()" value="Get new" />
+        <p id="date"></p>
+        <label>Jour: </label><input type="number" id="input" onchange="writeInput(this.value)" />
+        <p id="timer"></p>
+
+        <script>
+            let newDate
+            let dateText = document.getElementById("date")
+            let input = document.getElementById("input")
+            let timerId
+            let timer = 0
+            let pb = 10000000000000000000
+
+            getNew()
+
+            function getNew() {
+                stop()
+
+                let startDate = new Date(1900,0,1).getTime()
+                let endDate = new Date(2100,0,1).getTime()
+                let randomTime = Math.round(Math.random() * (endDate - startDate))
+                newDate = new Date(startDate + randomTime)
+
+                dateText.innerHTML = newDate.toISOString().slice(0, 10)
+                input.value = ""
+                
+                start()
+            }
+
+            function writeInput(value) {
+                if(parseInt(value) == newDate.getDay()) {
+                    if(timer < pb)
+                    {
+                        pb = timer
+                    }
+                    date.innerHTML = "Trouve ! " + newDate.getDay() + " | PB : " + pb
+                    stop()
+                }
+            }
+
+            function start() {
+                timer = 0
+                timerId = setInterval(function() {
+                    timer++
+                    document.getElementById("timer").innerHTML = timer
+                },1000)
+            }
+
+            function stop() {
+                clearInterval(timerId)
+                console.log("stop")
+            }
+
+
+
+        </script>
+    </body>
+</html>
