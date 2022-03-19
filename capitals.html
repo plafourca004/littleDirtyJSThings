@@ -11,6 +11,7 @@
         <button onclick="pressCountry(this.innerHTML)" id="3"></button>
         <p id="size"></p>
         <p id="tries"></p>
+        <p id="result"></p>
 
         <script>
 
@@ -161,7 +162,7 @@
     },
     {
         "country": "Colombia",
-        "city": "Colombia"
+        "city": "Bogota"
     },
     {
         "country": "Comoros",
@@ -800,6 +801,7 @@
             let country = document.getElementById("country")
             let sizeBalise = document.getElementById("size")
             let triesBalise = document.getElementById("tries")
+            let resultBalise = document.getElementById("result")
             let button = []
             button[3] = document.getElementById("3")
             button[2] = document.getElementById("2")
@@ -841,8 +843,11 @@
 
             function pressCountry(capital) {
                 if(capitalsJson[currentCountryIndex].city == capital) {
-                    console.log("POGGERS")
+                    resultBalise.innerHTML = "YES"
                     capitalsJson.splice(currentCountryIndex, 1)
+                }
+                else {
+                    resultBalise.innerHTML = "NO (capital of " + capitalsJson[currentCountryIndex].country + " is " + capitalsJson[currentCountryIndex].city + ")"
                 }
                 triesAmount++
                 if(capitalsJson.length > 0) {
