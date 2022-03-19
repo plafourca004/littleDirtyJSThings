@@ -8,3 +8,6 @@ Je crée souvent des micro projets en html/js que j'utilise pendant 2 jours avan
  -> trainingDates.html
     Interface que j'ai utilisé quand j'ai voulu apprendre à déterminer le jour de la semaine d'une date quelconque:
     Get new vous renvoie une date et vous devez mettre dans l'input le jour correspondant le plus vite possible (0 à 6 et cliquez sur entrer)
+
+ -> capitals.html
+    Interface me permettant d'apprendre les capitales des pays du monde
